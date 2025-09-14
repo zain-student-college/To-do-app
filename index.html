@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #4e5283;
+            padding: 3%;
+        }
+
+        #Heading {
+            text-align: center;
+            text-decoration: underline whitesmoke 6px;
+            font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+        }
+
+        #line2 {
+            color: rgb(255, 243, 228);
+            margin-top: 10%;
+        }
+        @media screen and (min-width:550px) {
+            #line2{
+                justify-content: center;
+                margin-top: 5%;
+            }
+            
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="Heading" style="color: aliceblue">TO-DO TASK APP</h1>
+    <h2 id="line2" style="display: flex;"> <li style="margin-left: 10px">Add Your Task's To-Do Today.</li> </h2>
+    <div style="width: 100%;  display: flex; margin-top: 40px; justify-content: center; ">
+    <div id="main"  style="  width: 320px;  border: 2px solid;  background-color: rgb(156, 195, 206);  padding: 9px;  padding-top: 20px;  padding-bottom: 20px; border-radius: 7px; ">
+    <input type="text" name="" id="input" style="padding: 5px;width: 67%;border: 2px solid; border-radius: 5px;" placeholder="Homework at 7pm..." />
+    <button id="add" style=" padding: 4px; border-radius: 5px; width: 25%; background: rgb(201, 255, 113);font-weight: 700;"> Add </button>
+        </div>
+    </div>
+
+    <script>
+
+        let num = 0;
+        let newhtml = `<p>hello</p>`;
+        let inputtext = document.querySelector("#input");
+        let add = document.querySelector("#add");
+        let mainbox = document.querySelector("#main");
+        let count = 0;
+        let doneclick = false;
+        let wishText = "";
+        let wishes = [
+            "🎉 Nice work, you nailed it!",
+            "💪 Great job, keep that energy going!",
+            "🚀 Awesome effort, you’re on fire!",
+            "🌟 Well done, that was smooth!",
+            "🏆 Task complete, you handled it perfectly!",
+        ];
+
+        add.addEventListener("click", () => {
+            let val = inputtext.value;
+            if (inputtext.value == "") {
+                alert("Add Some Task First");
+            } else {
+                if (count >= 5) {
+                    alert("Only 5 Task At A Time");
+                } else {
+                    // Paragraph Settings
+                    count++;
+                    let p = document.createElement("p");
+                    p.style.fontSize = "25px";
+                    p.style.color = "#1e293b";
+                    p.style.fontFamily = "verdana";
+                    p.style.textAlign = "center";
+                    p.style.textTransform = "capitalize";
+                    p.style.fontWeight = 800;
+                    p.innerText = val;
+                    mainbox.appendChild(p);
+
+                    //Div For Del And Done Button
+                    let cont = document.createElement("div");
+                    cont.style.display = "flex";
+                    cont.style.justifyContent = "center";
+                    mainbox.appendChild(cont);
+
+                    // Del Button Settings
+                    let delbut = document.createElement("button");
+                    delbut.textContent = "Delete 🗑️ ";
+                    delbut.style.backgroundColor = "#e63946";
+                    delbut.style.padding = "6px";
+                    delbut.style.cursor = "pointer";
+                    delbut.style.borderRadius = "7px";
+                    delbut.style.color = "white";
+                    delbut.style.marginRight = "7px";
+                    delbut.style.fontSize = "17px";
+                    delbut.style.fontWeight = "600";
+                    cont.appendChild(delbut);
+
+                    delbut.addEventListener("mouseover", function () {
+                        delbut.style.backgroundColor = "#b22222"; // darker red
+                    });
+                    delbut.addEventListener("mouseout", function () {
+                        delbut.style.backgroundColor = "#e63946"; // normal red
+                    });
+
+                    delbut.addEventListener("click", () => {
+                        count--;
+                        p.style.display = "none";
+                        delbut.style.display = "none";
+                        donebut.style.display = "none";
+                        if (doneclick) {
+                            wishText = p.innerText;
+                            wishes.splice(wishes.length, 0, wishText);
+                        }
+                    });
+
+                    //Done Button Settings
+                    let donebut = document.createElement("button");
+                    donebut.textContent = "Done ✅";
+                    donebut.style.backgroundColor = "#059d86";
+                    donebut.style.padding = "8px";
+                    donebut.style.marginLeft = "6px";
+                    donebut.style.cursor = "pointer";
+                    donebut.style.fontSize = "17px";
+                    donebut.style.fontWeight = "600";
+                    donebut.style.borderRadius = "7px";
+                    donebut.style.color = "white";
+                    cont.appendChild(donebut);
+
+                    donebut.addEventListener("mouseover", function () {
+                        donebut.style.backgroundColor = "#047a68"; // darker green
+                    });
+                    donebut.addEventListener("mouseout", function () {
+                        donebut.style.backgroundColor = "#059d86"; // normal green
+                    });
+
+                    donebut.addEventListener("click", () => {
+                        doneclick = true;
+                        let onewish = wishes.splice(0, 1);
+
+                        p.innerText = onewish;
+                        donebut.style.display = "none";
+                        p.style.fontSize = "23px";
+                    });
+                    inputtext.value = "";
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>
