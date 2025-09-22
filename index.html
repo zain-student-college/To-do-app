@@ -36,19 +36,19 @@
     <h2 id="line2" style="display: flex;"> <li style="margin-left: 10px">Add Your Task's To-Do Today.</li> </h2>
     <div style="width: 100%;  display: flex; margin-top: 40px; justify-content: center; ">
     <div id="main"  style="  width: 320px;  border: 2px solid;  background-color: rgb(156, 195, 206);  padding: 9px;  padding-top: 20px;  padding-bottom: 20px; border-radius: 7px; ">
-    <input type="text" name="" id="input" style="padding: 5px;width: 67%;border: 2px solid; border-radius: 5px;" placeholder="Homework at 7pm..." />
-    <button id="add" style=" padding: 4px; border-radius: 5px; width: 25%; background: rgb(201, 255, 113);font-weight: 700;"> Add </button>
+    <input type="text" name="" id="input" style="padding: 5px;width: 67%; height: 17px; border: 2px solid; border-radius: 5px;" placeholder="Homework at 7pm..." />
+    <button id="add" style=" padding: 4px; height: 31px; border-radius: 5px; width: 25%; background: rgb(201, 255, 113);font-weight: 700; font-size: 15px;"> Add </button>
         </div>
     </div>
 
     <script>
 
         let num = 0;
-        let newhtml = `<p>hello</p>`;
         let inputtext = document.querySelector("#input");
         let add = document.querySelector("#add");
         let mainbox = document.querySelector("#main");
         let count = 0;
+        let pcount=0;
         let doneclick = false;
         let wishText = "";
         let wishes = [
@@ -67,17 +67,46 @@
                 if (count >= 5) {
                     alert("Only 5 Task At A Time");
                 } else {
-                    // Paragraph Settings
+                   
+                    if(pcount<=5){
+                        pcount++;
+                    }
                     count++;
+                    //Div For Para And Count
+                    let pardiv = document.createElement('div');
+                    pardiv.style.width="100%";
+                    pardiv.style.display="flex";
+                    pardiv.style.justifyContent="center";
+
+                    let div = document.createElement("div");
+                    div.style.display="flex";
+                    div.style.paddingLeft="18px";
+                    div.style.paddingRight="15px";
+                    // div.style.width="100%";
+                    div.style.alignItems="center";
+                    div.style.justifyContent="center";
+                    div.style.gap="13px";
+
+                    let p2=document.createElement("p");
+                    p2.innerText=pcount+",";
+                    p2.style.fontSize = "23px";
+                    p2.style.color = "#1e293b";
+                    p2.style.fontFamily = "verdana";
+                    p2.style.textTransform = "capitalize";
+                    p2.style.fontWeight = 800;
+
                     let p = document.createElement("p");
                     p.style.fontSize = "25px";
                     p.style.color = "#1e293b";
                     p.style.fontFamily = "verdana";
-                    p.style.textAlign = "center";
+                    p.style.marginRight="15px";
                     p.style.textTransform = "capitalize";
                     p.style.fontWeight = 800;
                     p.innerText = val;
-                    mainbox.appendChild(p);
+                    div.appendChild(p2);
+                    div.appendChild(p);
+                    pardiv.appendChild(div);
+                    mainbox.appendChild(pardiv);
 
                     //Div For Del And Done Button
                     let cont = document.createElement("div");
@@ -106,10 +135,15 @@
                     });
 
                     delbut.addEventListener("click", () => {
-                        count--;
-                        p.style.display = "none";
-                        delbut.style.display = "none";
-                        donebut.style.display = "none";
+                       count--;
+                        cont.remove();
+                        pardiv.remove();
+                        pcount--;
+
+                        let firstp=document.querySelectorAll("#main div p:first-child");
+                        firstp.forEach((num,index)=>{
+                            num.innerText=(index+1)+",";
+                        });
                         if (doneclick) {
                             wishText = p.innerText;
                             wishes.splice(wishes.length, 0, wishText);
@@ -140,9 +174,14 @@
                         doneclick = true;
                         let onewish = wishes.splice(0, 1);
 
-                        p.innerText = onewish;
-                        donebut.style.display = "none";
-                        p.style.fontSize = "23px";
+                    p.innerText = onewish;
+                    donebut.style.display = "none";
+                    p2.style.display="none";
+                    p.style.fontSize = "23px";
+                    p.style.marginRight="0px";
+                    div.style.justifyContent="center";
+                    p.style.textAlign="center";
+                    
                     });
                     inputtext.value = "";
                 }
